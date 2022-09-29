@@ -7,4 +7,6 @@ router.get("/test",(req,res)=>res.send("Working"))
 
 router.post("/url/shorten",URLController.shortenURL)
 
+router.get('/:urlCode', URLController.redirecturl)
+
 module.exports=router 
