@@ -1,0 +1,24 @@
+{
+  "name": "project-urlshortnergroup67",
+  "version": "1.0.0",
+  "description": "Project-4",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Harikesh9690/project-urlShortnerGroup67.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Harikesh9690/project-urlShortnerGroup67/issues"
+  },
+  "homepage": "https://github.com/Harikesh9690/project-urlShortnerGroup67#readme",
+  "dependencies": {
+    "express": "^4.18.1",
+    "mongoose": "^6.6.2",
+    "nodemon": "^2.0.20"
+  }
+}
