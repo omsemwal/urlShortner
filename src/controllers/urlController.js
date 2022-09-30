@@ -25,7 +25,7 @@ const shortenURL = async function (req, res) {
     let newURL = await urlModel.create(data)
     let { longUrl, shortUrl, urlCode } = newURL.toObject()
 
-    res.status(201).send({ data: { longUrl, shortUrl, urlCode } })
+    res.status(201).send({ data: {urlCode, longUrl, shortUrl } })
 
   } catch (error) {
     res.status(500).send({ status: false, message: error.message })
@@ -43,7 +43,7 @@ const redirecturl = async function (req, res) {
     if (!mainUrl) {
       return res.status(404).send({ status: false, message: "url not found" })
     }
-    return res.status(302).send({ status: true, data: mainUrl })
+    return res.status(302).redirect(mainUrl.longUrl)
   } catch (error) {
     res.status(500).send({ status: false, message: error.message })
   }
