@@ -55,7 +55,7 @@ const redirecturl = async function (req, res) {
       return res.status(302).redirect(cachedmainUrl)
     } else {
       let mainUrl = await urlModel.findOne({ urlCode: urlCode }, { longUrl: 1, _id: 0 })
-      await SET_ASYNC(`${urlCode}`, JSON.stringify(mainUrl.longUrl))
+      await SET_ASYNC(`${urlCode}`, mainUrl.longUrl)
       return res.status(302).redirect(mainUrl.longUrl)
     }
 
