@@ -35,30 +35,24 @@ const shortenURL = async function (req, res) {
 
 const redirecturl = async function (req, res) {
   try {
-    // let urlCode = req.params.urlCode
-    // if (!shortId.isValid(urlCode)) {
-    //   return res.status(400).send({ status: false, message: "invalid urlCode" })
-    // }
-
-    // let mainUrl = await urlModel.findOne({ urlCode: urlCode }, { longUrl: 1, _id: 0 })
-    // if (!mainUrl) {
-    //   return res.status(404).send({ status: false, message: "url not found" })
-    // }
-    // return res.status(302).redirect(mainUrl.longUrl)
-
-    // ------------------with chaching------------------
-
     let urlCode = req.params.urlCode
-
+    if (!urlCode) {
+      return res.status(400).send({ status: false, message: "plese provide sort url" })
+    }
+    if (!shortId.isValid(urlCode)) {
+      return res.status(400).send({ status: false, message: "invalid urlCode" })
+    }
     let cachedmainUrl = await GET_ASYNC(`${urlCode}`)
     if (cachedmainUrl) {
       return res.status(302).redirect(cachedmainUrl)
     } else {
       let mainUrl = await urlModel.findOne({ urlCode: urlCode }, { longUrl: 1, _id: 0 })
+      if (!mainUrl) {
+        return res.status(404).send({ status: false, message: "url not found" })
+      }
       await SET_ASYNC(`${urlCode}`, mainUrl.longUrl)
       return res.status(302).redirect(mainUrl.longUrl)
     }
-
   } catch (error) {
     res.status(500).send({ status: false, message: error.message })
   }
