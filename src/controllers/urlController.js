@@ -26,7 +26,7 @@ const shortenURL = async function (req, res) {
     let newURL = await urlModel.create(data)
     let { longUrl, shortUrl, urlCode } = newURL.toObject()
 
-    res.status(201).send({ data: { urlCode, longUrl, shortUrl } })
+    res.status(201).send({data: { urlCode, longUrl, shortUrl } })
 
   } catch (error) {
     res.status(500).send({ status: false, message: error.message })
@@ -35,20 +35,16 @@ const shortenURL = async function (req, res) {
 
 const redirecturl = async function (req, res) {
   try {
-    // let urlCode = req.params.urlCode
-    // if (!shortId.isValid(urlCode)) {
-    //   return res.status(400).send({ status: false, message: "invalid urlCode" })
-    // }
-
-    // let mainUrl = await urlModel.findOne({ urlCode: urlCode }, { longUrl: 1, _id: 0 })
-    // if (!mainUrl) {
-    //   return res.status(404).send({ status: false, message: "url not found" })
-    // }
-    // return res.status(302).redirect(mainUrl.longUrl)
-
-    // ------------------with chaching------------------
-
     let urlCode = req.params.urlCode
+    if (!shortId.isValid(urlCode)) {
+      return res.status(400).send({ status: false, message: "invalid urlCode" })
+    }
+
+    let mainUrl = await urlModel.findOne({ urlCode: urlCode }, { longUrl: 1, _id: 0 })
+    if (!mainUrl) {
+      return res.status(404).send({ status: false, message: "url not found" })
+    }
+    
 
     let cachedmainUrl = await GET_ASYNC(`${urlCode}`)
     if (cachedmainUrl) {
